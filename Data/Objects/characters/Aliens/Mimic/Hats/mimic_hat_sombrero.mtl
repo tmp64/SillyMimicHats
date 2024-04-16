@@ -1,0 +1,14 @@
+
+<Material MtlFlags="524544">
+ <SubMaterials>
+  <Material Name="Mimic_Hat_Sombrero_mat" MtlFlags="524416" Shader="Illum" GenMask="18000040000001" StringGenMask="%ALLOW_SILHOUETTE_POM%NORMAL_MAP%SPECULAR_MAP%SUBSURFACE_SCATTERING" SurfaceType="" MatTemplate="" Diffuse="1,1,1" Specular="1,1,1" Opacity="1" Shininess="255" LayerAct="1">
+   <Textures>
+    <Texture Map="Diffuse" File="objects/characters/aliens/mimic/hats/textures/mimic_pet_sombrero_diff.tif"/>
+    <Texture Map="Bumpmap" File="objects/characters/aliens/mimic/hats/textures/mimic_pet_sombrero_ddna.tif"/>
+    <Texture Map="Specular" File="objects/characters/aliens/mimic/hats/textures/mimic_pet_sombrero_spec.tif"/>
+   </Textures>
+   <PublicParams EmittanceMapGamma="1" SSSIndex="0"/>
+  </Material>
+ </SubMaterials>
+ <PublicParams EmittanceMapGamma="1" SSSIndex="0"/>
+</Material>

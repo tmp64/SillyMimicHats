@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<Mod
+    modName="tmp64.SillyMimicHats"
+    displayName="Mimics with Silly Hats"
+    version="0.1.0"
+    author="Tsundereployer, kidaXV, tmp64"
+    dllName="SillyMimicHats.dll"
+    hasXML="true"
+    hasLevelXML="false"
+    enableShaderCompiler="false" />

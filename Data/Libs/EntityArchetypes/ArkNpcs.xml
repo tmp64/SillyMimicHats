@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<EntityPrototypeLibrary
+    Name="ArkNpcs">
+
+    <!-- Beanie Hat -->
+    <EntityPrototype
+        Name="Mimics.Mimic.BeanieHat"
+        Id="{7C468E82-1662-4650-96EA-8AED45511015}"
+        ArchetypeId="4787500438987328803"
+        ch:copy_sibling="Name=Mimics.Mimic">
+        <Properties
+            fileModel="Objects/characters/Aliens/Mimic/Mimic_beanie_hat.cdf"/>
+    </EntityPrototype>
+
+    <!-- Bucket Hat -->
+    <EntityPrototype
+        Name="Mimics.Mimic.BucketHat"
+        Id="{82831398-2851-4338-9062-9764C4717855}"
+        ArchetypeId="4699321646436087479"
+        ch:copy_sibling="Name=Mimics.Mimic">
+        <Properties
+            fileModel="Objects/characters/Aliens/Mimic/Mimic_bucket_hat.cdf"/>
+    </EntityPrototype>
+
+    <!-- Crown Hat -->
+    <EntityPrototype
+        Name="Mimics.Mimic.CrownHat"
+        Id="{84517D25-C181-4429-AAB5-5DBAF023DCDC}"
+        ArchetypeId="5710107070341092286"
+        ch:copy_sibling="Name=Mimics.Mimic">
+        <Properties
+            fileModel="Objects/characters/Aliens/Mimic/Mimic_crown_hat.cdf"/>
+    </EntityPrototype>
+
+    <!-- Rice Hat -->
+    <EntityPrototype
+        Name="Mimics.Mimic.RiceHat"
+        Id="{C94084E3-F145-4740-9806-BD12A5B2E02E}"
+        ArchetypeId="5226972229362821123"
+        ch:copy_sibling="Name=Mimics.Mimic">
+        <Properties
+            fileModel="Objects/characters/Aliens/Mimic/Mimic_rice_hat.cdf"/>
+    </EntityPrototype>
+
+    <!-- Sombrero -->
+    <EntityPrototype
+        Name="Mimics.Mimic.Sombrero"
+        Id="{DFB8940B-56B5-4739-A40F-A06BF85F2FCB}"
+        ArchetypeId="5649057830913906391"
+        ch:copy_sibling="Name=Mimics.Mimic">
+        <Properties
+            fileModel="Objects/characters/Aliens/Mimic/Mimic_sombrero.cdf"/>
+    </EntityPrototype>
+
+    <!-- Striped Hat -->
+    <EntityPrototype
+        Name="Mimics.Mimic.StripedHat"
+        Id="{9B80544A-6A67-4C26-9551-4D8B4EE71958}"
+        ArchetypeId="4626331007583333826"
+        ch:copy_sibling="Name=Mimics.Mimic">
+        <Properties
+            fileModel="Objects/characters/Aliens/Mimic/StripedHat/Mimic_striped_hat.cdf"/>
+    </EntityPrototype>
+
+    <!-- Top Hat -->
+    <EntityPrototype
+        Name="Mimics.Mimic.TopHat"
+        Id="{A6574C2A-284F-4B39-812B-F777ECEAEEAB}"
+        ArchetypeId="4932200438019026768"
+        ch:copy_sibling="Name=Mimics.Mimic">
+        <Properties
+            fileModel="Objects/characters/Aliens/Mimic/TopHat/Mimic_top_hat.cdf"/>
+    </EntityPrototype>
+
+    <!-- Witch Hat -->
+    <EntityPrototype
+        Name="Mimics.Mimic.WitchHat"
+        Id="{97C08451-0CF8-40CC-A625-28129B9676C7}"
+        ArchetypeId="5230144760060945278"
+        ch:copy_sibling="Name=Mimics.Mimic">
+        <Properties
+            fileModel="Objects/characters/Aliens/Mimic/Mimic_witch_hat.cdf"/>
+    </EntityPrototype>
+</EntityPrototypeLibrary>

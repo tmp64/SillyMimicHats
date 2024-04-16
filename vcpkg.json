@@ -1,0 +1,16 @@
+{
+  "name": "silly-mimic-hats",
+  "version-string": "0.1.0",
+  "description": "Put silly hats on all the mimics",
+  "builtin-baseline": "faed44dfa013088fe1910908a8a65887622f412f",
+  "$deps_": "Please, keep sorted alphabetically",
+  "$boost": "Don't include the whole Boost!",
+  "dependencies": [
+    "boost-core",
+    "boost-format",
+    "boost-variant",
+    "boost-bimap",
+    "detours",
+    "fmt"
+  ]
+}
