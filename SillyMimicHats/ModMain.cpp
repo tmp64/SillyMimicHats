@@ -1,5 +1,6 @@
 #include <Prey/CryScriptSystem/IScriptSystem.h>
 #include <Prey/CryScriptSystem/ScriptHelpers.h>
+#include <Prey/GameDll/ark/ArkScriptTable.h>
 #include <Chairloader/ModSDK/ChairGlobalModName.h>
 #include "ArkNpcSpawner.h"
 #include "ModMain.h"
@@ -8,33 +9,72 @@ ModMain* gMod = nullptr;
 
 auto g_CArkNpcSpawner_GetEntityArchetype_Hook = CArkNpcSpawner::FGetEntityArchetype.MakeHook();
 
+IEntityArchetype* GetArchetypeOverride(const CArkNpcSpawner* const _this)
+{
+	SmartScriptTable pScript = _this->GetEntity()->GetScriptTable();
+	if (!pScript)
+		return nullptr;
+
+	ArkSafeScriptTable pScriptSafe = pScript;
+	ArkSafeScriptTable pProps = pScriptSafe.GetSafeSubTable("Properties");
+	if (!pProps.m_pScriptTable)
+		return nullptr;
+
+	const char* archetypeName = pProps.GetString("sNpcArchetype", nullptr);
+	if (!archetypeName)
+		return nullptr;
+
+	const std::string* pNewName = gMod->GetReplacementArchetype(archetypeName);
+	if (!pNewName)
+		return nullptr;
+
+	IEntityArchetype* pArchetype = gEnv->pEntitySystem->LoadEntityArchetype(pNewName->c_str());
+	if (!pArchetype)
+	{
+		CryError("Archetype '{}' not found", *pNewName);
+		return nullptr;
+	}
+
+	return pArchetype;
+}
+
 IEntityArchetype* CArkNpcSpawner_GetEntityArchetype_Hook(const CArkNpcSpawner* const _this)
 {
-	IScriptTable* pScript = _this->GetEntity()->GetScriptTable();
-	Script::CallMethod(pScript, "Mod_PreSpawn");
-	IEntityArchetype* res = g_CArkNpcSpawner_GetEntityArchetype_Hook.InvokeOrig(_this);
-	Script::CallMethod(pScript, "Mod_PostSpawn");
+	IEntityArchetype* pOverride = GetArchetypeOverride(_this);
 
-	return res;
+	if (pOverride)
+		return pOverride;
+
+	return g_CArkNpcSpawner_GetEntityArchetype_Hook.InvokeOrig(_this);;
 }
 
 void ModMain::FillModInfo(ModDllInfoEx& info)
 {
-	info.modName = "tmp64.SillyMimicHats"; // CHANGE ME
-	info.logTag = "SillyMimicHats"; // CHANGE ME
-	info.supportsHotReload = true; // TODO: Add comment/wiki link
+	info.modName = "tmp64.SillyMimicHats";
+	info.logTag = "SillyMimicHats";
+	info.supportsHotReload = true;
 }
 
 void ModMain::InitHooks()
 {
-	// g_CArkNpcSpawner_SetupSpawnedNpcCharacter_Hook.SetHookFunc(&SetupSpawnedNpcCharacter_Hook);
 	g_CArkNpcSpawner_GetEntityArchetype_Hook.SetHookFunc(&CArkNpcSpawner_GetEntityArchetype_Hook);
 }
 
 void ModMain::InitSystem(const ModInitInfo& initInfo, ModDllInfo& dllInfo)
 {
 	BaseClass::InitSystem(initInfo, dllInfo);
-    ChairSetGlobalModName("tmp64.SillyMimicHats"); // CHANGE ME
+    ChairSetGlobalModName("tmp64.SillyMimicHats");
+	cry_random_seed(gEnv->bNoRandomSeed ? 0 : (uint32)std::time(nullptr));
+
+	// Default archetypes
+	const std::string MIMIC = "ArkNpcs.Mimics.Mimic";
+	RegisterArchetype(MIMIC, MIMIC + ".BucketHat");
+	RegisterArchetype(MIMIC, MIMIC + ".CrownHat");
+	RegisterArchetype(MIMIC, MIMIC + ".RiceHat");
+	RegisterArchetype(MIMIC, MIMIC + ".Sombrero");
+	RegisterArchetype(MIMIC, MIMIC + ".StripedHat");
+	RegisterArchetype(MIMIC, MIMIC + ".TopHat");
+	RegisterArchetype(MIMIC, MIMIC + ".WitchHat");
 }
 
 void ModMain::InitGame(bool isHotReloading)
@@ -71,6 +111,35 @@ void *ModMain::QueryInterface(const char *ifaceName) {
 }
 
 void ModMain::Connect(const std::vector<IChairloaderMod *> &mods) {
+}
+
+const std::string* ModMain::GetReplacementArchetype(std::string_view originalArchetype) const
+{
+	auto it = m_ArchetypeMap.find(originalArchetype);
+
+	if (it == m_ArchetypeMap.end())
+		return nullptr;
+
+	const std::vector<std::string>& list = it->second;
+	CRY_ASSERT(!list.empty());
+	size_t idx = cry_random(size_t(0), list.size() - 1);
+	return &list[idx];
+}
+
+void ModMain::RegisterArchetype(std::string_view originalName, std::string_view newName)
+{
+	auto it = m_ArchetypeMap.find(originalName);
+
+	if (it != m_ArchetypeMap.end())
+	{
+		// Append to the exsting list
+		it->second.push_back(std::string(newName));
+	}
+	else
+	{
+		// Create a new list
+		m_ArchetypeMap.emplace(std::string(originalName), std::vector<std::string> { std::string(newName) });
+	}
 }
 
 extern "C" DLL_EXPORT IChairloaderMod* ClMod_Initialize()

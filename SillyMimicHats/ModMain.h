@@ -51,6 +51,19 @@ private:
 
 	//! Called after most of game logic has been updated, before CCryAction::PostUpdate.
 	// virtual void LateUpdate(unsigned updateFlags) override;
+
+public:
+	//! Returns a new archetype name for a given original archetype.
+	//! @param	originalArchetype	Origianl archetype name.
+	//! @returns New archetype name of nullptr if not replaced.
+	const std::string* GetReplacementArchetype(std::string_view originalArchetype) const;
+
+	//! Registers a new archetype for replacement.
+	void RegisterArchetype(std::string_view originalName, std::string_view newName);
+
+private:
+	//! Maps archetype name to a list of archetypes with hats.
+	std::map<std::string, std::vector<std::string>, std::less<>> m_ArchetypeMap;
 };
 
 extern ModMain* gMod;
