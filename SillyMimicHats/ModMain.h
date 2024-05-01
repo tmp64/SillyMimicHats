@@ -1,4 +1,5 @@
 #pragma once
+#include <random>
 #include <ChairLoader/ModSDK/ChairloaderModBase.h>
 
 class ModMain : public ChairloaderModBase
@@ -54,14 +55,17 @@ private:
 
 public:
 	//! Returns a new archetype name for a given original archetype.
-	//! @param	originalArchetype	Origianl archetype name.
+	//! Modifies internal RNG state.
+	//! @param	originalArchetype	Original archetype name.
 	//! @returns New archetype name of nullptr if not replaced.
-	const std::string* GetReplacementArchetype(std::string_view originalArchetype) const;
+	const std::string* GetReplacementArchetype(std::string_view originalArchetype);
 
 	//! Registers a new archetype for replacement.
 	void RegisterArchetype(std::string_view originalName, std::string_view newName);
 
 private:
+	std::mt19937 m_Rng;
+
 	//! Maps archetype name to a list of archetypes with hats.
 	std::map<std::string, std::vector<std::string>, std::less<>> m_ArchetypeMap;
 };

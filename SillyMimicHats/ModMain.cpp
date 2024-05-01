@@ -64,7 +64,8 @@ void ModMain::InitSystem(const ModInitInfo& initInfo, ModDllInfo& dllInfo)
 {
 	BaseClass::InitSystem(initInfo, dllInfo);
     ChairSetGlobalModName("tmp64.SillyMimicHats");
-	cry_random_seed(gEnv->bNoRandomSeed ? 0 : (uint32)std::time(nullptr));
+
+	m_Rng = std::mt19937(gEnv->bNoRandomSeed ? 0u : std::random_device()());
 
 	// Default archetypes
 	const std::string MIMIC = "ArkNpcs.Mimics.Mimic";
@@ -113,7 +114,7 @@ void *ModMain::QueryInterface(const char *ifaceName) {
 void ModMain::Connect(const std::vector<IChairloaderMod *> &mods) {
 }
 
-const std::string* ModMain::GetReplacementArchetype(std::string_view originalArchetype) const
+const std::string* ModMain::GetReplacementArchetype(std::string_view originalArchetype)
 {
 	auto it = m_ArchetypeMap.find(originalArchetype);
 
@@ -122,7 +123,8 @@ const std::string* ModMain::GetReplacementArchetype(std::string_view originalArc
 
 	const std::vector<std::string>& list = it->second;
 	CRY_ASSERT(!list.empty());
-	size_t idx = cry_random(size_t(0), list.size() - 1);
+	std::uniform_int_distribution<int> distribution(0, (int)list.size() - 1);
+	int idx = distribution(m_Rng);
 	return &list[idx];
 }
 
