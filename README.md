@@ -13,3 +13,7 @@ playthrough is recommended.
 1. Install the Chairloader modding framework for Prey (2017). Instructions can be found on the [Chairloader Github page](https://github.com/thelivingdiamond/Chairloader).
 2. Download the latest release of the mod from the [Releases page](https://github.com/tmp64/Hackerman/releases).
 3. Install the mod using ChairManager
+
+## Credits
+This mod is based on [Mimics With Silly Hats](https://www.nexusmods.com/prey2017/mods/55)
+by Tsundereployer and kidaXV.
