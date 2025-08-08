@@ -1,0 +1,26 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 25,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "ci-build",
+      "binaryDir": "${sourceDir}/_build/${presetName}",
+      "generator": "Ninja Multi-Config",
+      "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+      "cacheVariables": {
+        "CHAIRLOADER_COMMON_PATH": "${sourceDir}/Chairloader/Common"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "ci-build",
+      "configurePreset": "ci-build",
+      "configuration": "Release"
+    }
+  ]
+}

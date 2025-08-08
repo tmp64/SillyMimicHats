@@ -1,0 +1,57 @@
+name: build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  
+  # Run GitHub Actions monthly to make sure CI isn't broken
+  schedule:
+    - cron: '0 0 1 * *'
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    env:
+      VCPKG_ROOT: '${{github.workspace}}/vcpkg'
+
+    steps:
+    - name: Checkout this repo
+      uses: actions/checkout@v3
+
+    - name: Checkout Chairloader for Mod SDK
+      uses: actions/checkout@v3
+      with:
+        repository: thelivingdiamond/Chairloader
+        ref: main
+        path: Chairloader
+        sparse-checkout: "Common"
+    
+    - name: Restore artifacts, or setup vcpkg for building artifacts
+      uses: lukka/run-vcpkg@v11
+      id: runvcpkg
+      with:
+        vcpkgJsonGlob: 'vcpkg.json'
+        vcpkgDirectory: '${{env.VCPKG_ROOT}}'
+        vcpkgGitCommitId: 'f7423ee180c4b7f40d43402c2feb3859161ef625'
+        runVcpkgInstall: false
+
+    - name: Build with CMake
+      uses: lukka/run-cmake@v10
+      id: runcmake
+      with:
+        configurePreset: 'ci-build'
+        buildPreset: 'ci-build'
+      env:
+        VCPKG_FORCE_SYSTEM_BINARIES: 1
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: tmp64.SillyMimicHats.zip
+        path: |
+          SillyMimicHats.dll
+          SillyMimicHats.pdb
+          Data
+          ModInfo.xml
