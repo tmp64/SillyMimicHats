@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<EntitySpawnList>
-    <Category Header="Typhon">
-        <Category Header="Mimics">
-            <Npc Name="ArkNpcs.Mimics.Mimic.TopHat">My Mimic</Npc>
-        </Category>
-    </Category>
-</EntitySpawnList>
