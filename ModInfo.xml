@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <Mod
     modName="tmp64.SillyMimicHats"
-    displayName="Mimics with Silly Hats"
-    version="0.1.0"
+    displayName="Random Mimics With Silly Hats"
+    version="1.0.0"
     author="Tsundereployer, kidaXV, tmp64"
     dllName="SillyMimicHats.dll"
     hasXML="true"
